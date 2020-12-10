@@ -1,10 +1,18 @@
 const express = require("express");
+const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 const uniqid = require("uniqid");
 const { check, validationResult } = require("express-validator");
+const { writeFile, createReadStream } = require("fs-extra");
+const { pipeline } = require("stream");
+const zlib = require("zlib");
+const { join } = require("path");
 
 const router = express.Router();
+const upload = multer({});
+
+const studentImagesPath = join(__dirname, "/images");
 
 const readFileHandler = (filename) => {
   const targetFile = JSON.parse(fs.readFileSync(path.join(__dirname, filename)).toString());
@@ -78,8 +86,32 @@ router.get("/:id/projects", (req, res) => {
   }
 });
 
-// Email validation
+// Upload student ID photo
+router.post("/:id/upload", upload.single("avatar"), async (req, res, next) => {
+  try {
+    await writeFile(join(studentImagesPath, `${req.params.id}${path.extname(req.file.originalname)}`), req.file.buffer);
+    const targetFile_students = readFileHandler("students.json");
+    const filteredFile = targetFile_students.filter((student) => student._id !== req.params.id);
+    const student = targetFile_students.filter((e) => e._id === req.params.id);
+    student[0].image = `${req.params.id.toString()}${path.extname(req.file.originalname.toString())}`;
 
+    filteredFile.push(student[0]);
+    fs.writeFileSync(path.join(__dirname, "students.json"), JSON.stringify(filteredFile));
+    res.send("Image Successfully Uploaded");
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+// Download student ID photo
+router.get("/:id/download", (req, res, next) => {
+  const source = createReadStream(join(studentImagesPath, `${req.params.id}`));
+  res.setHeader("Content-Disposition", `attachment; filename=${req.params.id}.gz`);
+  pipeline(source, zlib.createGzip(), res, (error) => next(error));
+});
+
+// Duplicate email validation
 const checkDuplicateEmails = (email) => {
   const targetFile = JSON.parse(fs.readFileSync(path.join(__dirname, "students.json")).toString());
   const filteredFile = targetFile.filter((user) => user.email === email);

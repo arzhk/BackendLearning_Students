@@ -3,7 +3,6 @@ const fs = require("fs");
 const path = require("path");
 const uniqid = require("uniqid");
 const { check, validationResult } = require("express-validator");
-const { nextTick } = require("process");
 
 const router = express.Router();
 
