@@ -124,9 +124,9 @@ router.post("/:id/upload", upload.single("avatar"), async (req, res, next) => {
 });
 
 // Download student ID photo
-router.get("/:id/download", (req, res, next) => {
-  const source = createReadStream(join(studentImagesPath, `${req.params.id}`));
-  res.setHeader("Content-Disposition", `attachment; filename=${req.params.id}.gz`);
+router.get("/:filename/download", (req, res, next) => {
+  let source = createReadStream(join(studentImagesPath, `${req.params.filename}.jpg`));
+  res.setHeader("Content-Disposition", `attachment; filename=${req.params.filename}.jpg.gz`);
   pipeline(source, zlib.createGzip(), res, (error) => next(error));
 });
 

@@ -1,10 +1,18 @@
 const express = require("express");
+const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 const uniqid = require("uniqid");
 const { check, validationResult } = require("express-validator");
+const { writeFile, createReadStream } = require("fs-extra");
+const { pipeline } = require("stream");
+const zlib = require("zlib");
+const { join } = require("path");
 
 const router = express.Router();
+const upload = multer({});
+
+const projectImagesPath = join(__dirname, "../../public/images/projects");
 
 const readFileHandler = (filename) => {
   const targetFile = JSON.parse(fs.readFileSync(path.join(__dirname, filename)).toString());
@@ -132,6 +140,49 @@ router.delete("/:id", (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+// Upload project photo
+router.post("/:id/upload", upload.single("avatar"), async (req, res, next) => {
+  try {
+    const targetFile_projects = readFileHandler("projects.json");
+    if (targetFile_projects.filter((e) => e._id === req.params.id).length !== 0) {
+      await writeFile(
+        join(projectImagesPath, `${req.params.id}${path.extname(req.file.originalname)}`),
+        req.file.buffer
+      );
+      const filteredFile = targetFile_projects.filter((project) => project._id !== req.params.id);
+      const project = targetFile_projects.filter((project) => project._id === req.params.id);
+      project[0].image = `${req.params.id.toString()}${path.extname(req.file.originalname.toString())}`;
+      filteredFile.push(project[0]);
+      fs.writeFileSync(path.join(__dirname, "projects.json"), JSON.stringify(filteredFile));
+      res.send("Image successfully uploaded");
+    } else {
+      const err = new Error();
+      err.message = {
+        errors: [
+          {
+            value: req.params.id,
+            msg: "Student with that ID not found",
+            param: "_studentId",
+            location: "url",
+          },
+        ],
+      };
+      err.httpStatusCode = 400;
+      next(err);
+    }
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+// Download project photo
+router.get("/:filename/download", (req, res, next) => {
+  let source = createReadStream(join(projectImagesPath, `${req.params.filename}.jpg`));
+  res.setHeader("Content-Disposition", `attachment; filename=${req.params.filename}.jpg.gz`);
+  pipeline(source, zlib.createGzip(), res, (error) => next(error));
 });
 
 module.exports = router;
