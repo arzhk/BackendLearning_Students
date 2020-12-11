@@ -107,7 +107,7 @@ function EditStudent(props) {
   }, [props.editID]);
 
   return (
-    <Col xs={3} className="mb-3">
+    <Col xs={4} className="mb-3">
       <div className="dashboard-panel text-left">
         <h4 className="font-weight-bold">Edit student info</h4>
 

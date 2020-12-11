@@ -61,7 +61,7 @@ function AddStudent(props) {
   };
 
   return (
-    <Col xs={3} className="mb-3">
+    <Col xs={4} className="mb-3">
       <div className="dashboard-panel text-left">
         <h4 className="font-weight-bold">Add student</h4>
         <input className="d-block" type="text" placeholder="First name..." value={name} onChange={updateInputHandler} />
