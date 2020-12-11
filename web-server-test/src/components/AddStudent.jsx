@@ -30,6 +30,7 @@ function AddStudent(props) {
       if (data.ok) {
         props.getError("", false);
         props.getSuccess("New student sucessfully added", true);
+        window.location.reload();
       } else {
         props.getSuccess("", false);
         props.getError("cannot enter duplicate email.", true);

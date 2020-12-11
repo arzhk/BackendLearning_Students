@@ -8,12 +8,14 @@ import EditProject from "./EditProject";
 import EditStudent from "./EditStudent";
 import GetAllStudents from "./GetAllStudents";
 import GetAllProjects from "./GetAllProjects";
+import StudentTableData from "./StudentTableData";
 
 function Main() {
   const [showError, setShowError] = React.useState(false);
   const [errorText, setErrorText] = React.useState("error message");
   const [showSuccess, setShowSuccess] = React.useState(false);
   const [successText, setSuccessText] = React.useState(false);
+  const [editID, setEditID] = React.useState("");
 
   const getErrorMessage = (error, shouldShow) => {
     setShowError(shouldShow);
@@ -25,7 +27,11 @@ function Main() {
     setSuccessText(success);
     setTimeout(() => {
       setShowSuccess(false);
-    }, 1500);
+    }, 2500);
+  };
+
+  const getEditID = (id) => {
+    setEditID(id);
   };
 
   return (
@@ -46,15 +52,16 @@ function Main() {
         <h6 className="w-50 mx-auto mb-4 endpoint-title">STUDENT ENDPOINT</h6>
         <Row className="justify-content-center mb-5">
           <AddStudent getError={getErrorMessage} getSuccess={getSuccessMessage} />
+          <EditStudent getError={getErrorMessage} getSuccess={getSuccessMessage} editID={editID} />
           <DeleteStudent />
-          <EditStudent />
           <GetAllStudents />
+          <StudentTableData getEditID={getEditID} />
         </Row>
         <h6 className="w-50 mx-auto mb-4 endpoint-title">PROJECT ENDPOINT</h6>
         <Row className="justify-content-center mb-5">
           <AddProject />
-          <DeleteProject />
           <EditProject />
+          <DeleteProject />
           <GetAllProjects />
         </Row>
       </Container>

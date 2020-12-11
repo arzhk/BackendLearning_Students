@@ -33,7 +33,8 @@ router.get("/", (req, res) => {
 // Get single student
 router.get("/:id", (req, res) => {
   const targetFile = readFileHandler("students.json");
-  const student = targetFile.filter((user) => user.ID === req.params.id);
+  const student = targetFile.filter((user) => user._id === req.params.id);
+  console.log(student);
   res.send(student);
 });
 
