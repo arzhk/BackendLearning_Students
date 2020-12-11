@@ -26,6 +26,16 @@ h1 {
   height: 100%;
 }
 
+.dashboard-panel-small {
+  background-color: rgb(245, 245, 245);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0.6rem;
+  padding: 20px;
+  position: relative;
+  height: 46.5%;
+}
+
 input {
   margin-bottom: 10px !important;
   border: 1px solid rgba(0, 0, 0, 0.125);

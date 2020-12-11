@@ -23,15 +23,13 @@ function DeleteStudent() {
   };
 
   return (
-    <Col xs={3} className="mb-3">
-      <div className="dashboard-panel text-left">
-        <h4 className="font-weight-bold">Delete Student</h4>
-        <input type="text" placeholder="Enter student ID..." value={studentID} onChange={updateInputHandler} />
-        <Button onClick={deleteStudentHandler} variant="danger">
-          Submit
-        </Button>
-      </div>
-    </Col>
+    <div className="dashboard-panel-small text-left mb-3">
+      <h4 className="font-weight-bold">Delete Student</h4>
+      <input type="text" placeholder="Enter student ID..." value={studentID} onChange={updateInputHandler} />
+      <Button onClick={deleteStudentHandler} variant="danger">
+        Submit
+      </Button>
+    </div>
   );
 }
 

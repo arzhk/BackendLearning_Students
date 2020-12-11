@@ -18,12 +18,10 @@ function GetAllProjects() {
   };
 
   return (
-    <Col xs={3} className="mb-3">
-      <div className="dashboard-panel text-left">
-        <h4 className="font-weight-bold">Get all projects</h4>
-        <Button onClick={fetchAllProjects}>Fetch projects</Button>
-      </div>
-    </Col>
+    <div className="dashboard-panel-small text-left">
+      <h4 className="font-weight-bold">Get all projects</h4>
+      <Button onClick={fetchAllProjects}>Fetch projects</Button>
+    </div>
   );
 }
 

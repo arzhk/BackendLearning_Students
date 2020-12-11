@@ -25,7 +25,7 @@ function StudentTableData(props) {
   }, []);
 
   return (
-    <Col xs={12}>
+    <Col xs={10}>
       <Table striped bordered hover size="sm" className="student-data-table">
         <thead>
           <tr>

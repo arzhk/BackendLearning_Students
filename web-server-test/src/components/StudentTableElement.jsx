@@ -31,13 +31,13 @@ function StudentTableElement(props) {
       <td>{props.student.email}</td>
       <td>{props.student.dob}</td>
       <td>
-        <Button variant="warning" className="mr-3 rounded-pill" onClick={editIDHandler}>
+        <Button variant="warning" className="mr-2 rounded-pill" onClick={editIDHandler}>
           <i className="far fa-edit mr-1"></i>Edit
         </Button>
-        <Button variant="danger" className="mr-3 rounded-pill" onClick={deleteStudentHandler}>
+        <Button variant="danger" className="mr-2 rounded-pill" onClick={deleteStudentHandler}>
           <i className="far fa-trash-alt mr-1"></i>Delete
         </Button>
-        <Button variant="success" className="mr-3 rounded-pill">
+        <Button variant="success" className="mr-2 rounded-pill">
           <i className="far fa-folder-open mr-1"></i> Projects
         </Button>
         <Button className="rounded-pill">

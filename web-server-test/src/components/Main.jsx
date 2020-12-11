@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Alert } from "react-bootstrap";
+import { Container, Row, Alert, Col } from "react-bootstrap";
 import AddProject from "./AddProject";
 import AddStudent from "./AddStudent";
 import DeleteStudent from "./DeleteStudent";
@@ -53,16 +53,20 @@ function Main() {
         <Row className="justify-content-center mb-5">
           <AddStudent getError={getErrorMessage} getSuccess={getSuccessMessage} />
           <EditStudent getError={getErrorMessage} getSuccess={getSuccessMessage} editID={editID} />
-          <DeleteStudent />
-          <GetAllStudents />
+          <Col xs={3}>
+            <DeleteStudent />
+            <GetAllStudents />
+          </Col>
           <StudentTableData getEditID={getEditID} />
         </Row>
         <h6 className="w-50 mx-auto mb-4 endpoint-title">PROJECT ENDPOINT</h6>
         <Row className="justify-content-center mb-5">
           <AddProject />
           <EditProject />
-          <DeleteProject />
-          <GetAllProjects />
+          <Col xs={3}>
+            <DeleteProject />
+            <GetAllProjects />
+          </Col>
         </Row>
       </Container>
     </div>

@@ -18,12 +18,10 @@ function GetAllStudents() {
   };
 
   return (
-    <Col xs={3} className="mb-3">
-      <div className="dashboard-panel text-left">
-        <h4 className="font-weight-bold">Get all students</h4>
-        <Button onClick={fetchAllStudents}>Fetch students</Button>
-      </div>
-    </Col>
+    <div className="dashboard-panel-small text-left">
+      <h4 className="font-weight-bold">Get all students</h4>
+      <Button onClick={fetchAllStudents}>Fetch students</Button>
+    </div>
   );
 }
 
